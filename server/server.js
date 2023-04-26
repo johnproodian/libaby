@@ -18,3 +18,14 @@ app.listen(PORT, () => {
     console.log(`Libaby is now listening on port ${PORT}`)
 })
 
+// test query for steven's db
+// const text = "insert into users(id, username, location) values($1, $2, $3) returning *";
+// const values = ['123', 'testuser', 'austin'];
+// client.query(text, values, (err, res) => {
+//     if (err) {
+//         console.log(err.stack);
+//     } else {
+//         console.log(res.rows[0]);
+//     }
+// })
+
