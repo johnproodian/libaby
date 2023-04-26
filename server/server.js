@@ -1,21 +1,29 @@
 const express = require('express');
 // import connection info to db
-const client = require('./config/connection.js');
+const sequelize = require('./config/connection.js');
+const { User } = require('./models');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// connect to pg db
-client.connect((err) => {
-    if (err) {
-        console.log('connection error', err.stack)
-    } else {
-        console.log('connected');
-    }
-})
+// // connect to pg db
+// client.connect((err) => {
+//     if (err) {
+//         console.log('connection error', err.stack)
+//     } else {
+//         console.log('connected');
+//     }
+// })
 
-app.listen(PORT, () => {
-    console.log(`Libaby is now listening on port ${PORT}`)
+sequelize.sync({ force: true }).then(() => {
+    app.listen(PORT, () => {
+        console.log(`Libaby is now listening on port ${PORT}`)
+    })
+    User.create({
+        username: 'test',
+        email: 'test@test.com',
+        password: 'test12345'
+    })
 })
 
 // test query for steven's db
@@ -28,4 +36,6 @@ app.listen(PORT, () => {
 //         console.log(res.rows[0]);
 //     }
 // })
+
+
 

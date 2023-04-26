@@ -1,16 +1,31 @@
-const { Client } = require('pg');
+// const { Client } = require('pg');
 const { Sequelize } = require('sequelize');
 // configure .env to be able to use process.env for db host, port, name, user, password
 require('dotenv').config();
 
+
 // temporary local db for testing
-const client = new Client({
+const sequelize = new Sequelize('libaby', 'john', process.env.TEST_PW, {
     host: 'localhost',
     port: 5432,
-    database: 'libaby',
-    user: 'john',
-    password: process.env.TEST_PW
+    dialect: 'postgres',
 })
+
+try {
+    sequelize.authenticate();
+    console.log('Sequelize connection has been establisthed!')
+} catch(error) {
+    console.error('Unable to connect db via sequelize:', error);
+}
+
+// // temporary local db for testing
+// const client = new Client({
+//     host: 'localhost',
+//     port: 5432,
+//     database: 'libaby',
+//     user: 'john',
+//     password: process.env.TEST_PW
+// })
 
 // // create a new pg client with connection info--connecting to Steven's server
 // const client = new Client({
@@ -22,4 +37,4 @@ const client = new Client({
 // });
 
 // export connection
-module.exports = client;
+module.exports = sequelize;
