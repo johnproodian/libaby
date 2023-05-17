@@ -3,11 +3,10 @@ const { Sequelize } = require('sequelize');
 // configure .env to be able to use process.env for db host, port, name, user, password
 require('dotenv').config();
 
-
 // temporary local db for testing
-const sequelize = new Sequelize('libaby', 'john', process.env.TEST_PW, {
-    host: 'localhost',
-    port: 5432,
+const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
     dialect: 'postgres',
 })
 
@@ -17,6 +16,11 @@ try {
 } catch(error) {
     console.error('Unable to connect db via sequelize:', error);
 }
+
+
+
+// export connection
+module.exports = sequelize;
 
 // // temporary local db for testing
 // const client = new Client({
@@ -36,5 +40,4 @@ try {
 //     password: process.env.DB_PASSWORD
 // });
 
-// export connection
-module.exports = sequelize;
+// module.exports = client;
